@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('title')
-    suplier
+    home
 @endsection
 
 @section('content')
