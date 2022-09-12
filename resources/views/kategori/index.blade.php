@@ -28,14 +28,21 @@
   </thead>
 
   <tbody>
+    @foreach ($kategori as $item)
     <tr>
-        <td>1</td>
-        <td>kursi</td>
+        <td>{{ $loop->iteration}}</td>
+        <td>{{ $item->nama}}</td>
         <td>
-            <a href="#" class=" btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
-            <a href="#" class=" btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></a>
+            <a href="/kategori/edit/{{$item->id}}" class=" btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+            <!-- <form action="{{route('kategori.destroy',$item->id)}}" method ="POST">
+              @csrf
+              @method('delete')
+              <button class="btn btn-sm btn-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
+            </form> --> 
+            <a href="/kategori/hapus/{{$item->id}}" class=" btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></a>
         </td>
     </tr>
+    @endforeach
   </tbody>
 </table>
 </div>
@@ -45,16 +52,25 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Tambah Kategori</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Confirm</button>
-      </div>
+        <form action="{{route('kategori.store')}}" method="POST">
+          @csrf
+          <div class="form-group">
+            <label for="nama">Nama</label>
+            <input type="text" name="nama" id="nama" 
+            class="form-control @error('nama') is-invalid @enderror">
+          </input>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Simpan</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

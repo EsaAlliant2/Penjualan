@@ -1,23 +1,30 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{
+    KategoriController,
+    BarangController,
+    SuplierController,
+    PembeliController
+};
 
 Route::get('/', function () {
     return view('home');
 });
 
 
-Route::get('/barang', function () {
-    return view('barang.index');
-});
+Route :: resource('/barang',BarangController::class);
+Route :: get('/barang/{id}/edit/',[BarangController::class,'edit']);
+Route :: get('/barang/{id}/hapus/',[BarangController::class,'destroy']);
 
-Route::get('/kategori', function () {
-    return view('kategori.index');
-});
+//route kategori
+Route :: resource('/kategori',KategoriController::class);
+Route :: get('/kategori/edit/{id}',[KategoriController::class,'edit']);
+Route :: get('/kategori/hapus/{id}',[KategoriController::class,'destroy']);
 
-Route::get('/pembeli', function () {
-    return view('pembeli.index');
-});
+Route :: resource('/pembeli',PembeliController::class);
+Route :: get('/pembeli/{id}/edit',[PembeliController::class,'edit']);
+Route :: get('/pembeli/{id}/hapus',[PembeliController::class,'destroy']);
 
 Route::get('/pembelian', function () {
     return view('pembelian.index');
@@ -27,6 +34,6 @@ Route::get('/penjualan', function () {
     return view('penjualan.index');
 });
 
-Route::get('/suplier', function () {
-    return view('suplier.index');
-});
+Route :: resource('/suplier',SuplierController::class);
+Route :: get('/suplier/{id}/edit',[SuplierController::class,'edit']);
+Route :: get('/suplier/{id}/hapus',[SuplierController::class,'destroy']);

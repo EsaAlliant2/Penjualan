@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('title')
-    home
+    suplier
 @endsection
 
 @section('content')
@@ -10,9 +10,8 @@
         <div class="card-title">
             <h5>Data suplier</h5>
 
-            <button type="button" class="btn btn-success btn-sm float-end"
-            data-bs-toggle="modal" data-bs-target="#modalTambah"><i class="fa fa-plus"></i></
-            button>
+            <a class="btn btn-success btn-sm float-end" href="{{ route('suplier.create')}}">
+            <i class="fa fa-plus"></i></a>
         </div>
     </div>
 </div>
@@ -23,23 +22,25 @@
     <tr>
         <th style="width: 5%">No</th>
         <th>Nama</th>
-        <th>telepon</th>
-        <th>alamat</th>
+        <th>Telepon</th>
+        <th>Alamat</th>
         <th style="width: 10%">Aksi</th>
     </tr>
   </thead>
 
   <tbody>
+    @foreach ($suplier as $item)
     <tr>
-        <td>1</td>
-        <td>sefri</td>
-        <td>08234516</td>
-        <td>Jl kelangan 01</td>
+        <td>{{$loop->iteration}}</td>
+        <td>{{$item->nama}}</td>
+        <td>{{$item->telepon}}</td>
+        <td>{{$item->alamat}}</td>
         <td>
-            <a href="#" class=" btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
-            <a href="#" class=" btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></a>
+            <a href="/suplier/{{$item->id}}/edit" class=" btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+            <a href="/suplier/{{$item->id}}/hapus" class=" btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></a>
         </td>
     </tr>
+    @endforeach
   </tbody>
 </table>
 </div>
@@ -49,16 +50,14 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Tambah suplier</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Confirm</button>
-      </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Simpan</button>
+        </div>
     </div>
   </div>
 </div>

@@ -14,7 +14,10 @@ class PembeliController extends Controller
      */
     public function index()
     {
-        //
+        $pembeli = Pembeli::all();
+        // return ($pembeli);
+        //  dd($pembeli->all());
+         return view('pembeli.index', compact('pembeli'));
     }
 
     /**
@@ -24,7 +27,8 @@ class PembeliController extends Controller
      */
     public function create()
     {
-        //
+        $pembeli = Pembeli::all();
+        return view('pembeli.add', compact('pembeli'));
     }
 
     /**
@@ -35,7 +39,13 @@ class PembeliController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'nama' => 'required|max:255',
+            'telepon' => 'required|numeric',
+            'alamat' => 'required',
+        ]);
+        $pembeli = pembeli::create($request->all());
+        return redirect ('pembeli');
     }
 
     /**
@@ -55,9 +65,10 @@ class PembeliController extends Controller
      * @param  \App\Models\pembeli  $pembeli
      * @return \Illuminate\Http\Response
      */
-    public function edit(pembeli $pembeli)
+    public function edit($id)
     {
-        //
+        $pembeli = Pembeli::find($id);
+        return view ('pembeli.add', compact ('pembeli'));
     }
 
     /**
@@ -69,7 +80,17 @@ class PembeliController extends Controller
      */
     public function update(Request $request, pembeli $pembeli)
     {
-        //
+        $validate = $request->validate([
+            'nama' => 'required|max:255',
+            'telepon' => 'required|max:255',
+            'alamat' => 'required|max:255'
+        ]);
+        $pembeli->update([
+            'nama' => $request -> nama,
+            'telepon' => $request -> telepon,
+            'alamat' => $request -> alamat
+        ]);
+        return redirect('pembeli');
     }
 
     /**
@@ -78,8 +99,10 @@ class PembeliController extends Controller
      * @param  \App\Models\pembeli  $pembeli
      * @return \Illuminate\Http\Response
      */
-    public function destroy(pembeli $pembeli)
+    public function destroy($id)
     {
-        //
+        $pembeli = Pembeli::find($id);
+        $pembeli->delete();
+        return redirect('pembeli');
     }
-}
+    }
