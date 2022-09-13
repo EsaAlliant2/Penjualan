@@ -27,8 +27,7 @@ class SuplierController extends Controller
      */
     public function create()
     {
-        $suplier = Suplier::all();
-        return view('suplier.add', compact('suplier'));
+        
     }
 
     /**
@@ -68,7 +67,7 @@ class SuplierController extends Controller
     public function edit($id)
     {
         $suplier = Suplier::find($id);
-        return view ('suplier.edit', compact ('suplier'));
+        return view ('suplier.form', compact ('suplier'));
     }
 
     /**

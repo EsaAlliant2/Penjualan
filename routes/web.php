@@ -5,12 +5,11 @@ use App\Http\Controllers\{
     KategoriController,
     BarangController,
     SuplierController,
-    PembeliController
+    PembeliController,
+    DashboardController,
+    PembelianController
 };
-
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/',[DashboardController::class,'index']);
 
 
 Route :: resource('/barang',BarangController::class);
@@ -26,9 +25,9 @@ Route :: resource('/pembeli',PembeliController::class);
 Route :: get('/pembeli/{id}/edit',[PembeliController::class,'edit']);
 Route :: get('/pembeli/{id}/hapus',[PembeliController::class,'destroy']);
 
-Route::get('/pembelian', function () {
-    return view('pembelian.index');
-});
+Route :: resource('/pembelian',PembelianController::class);
+Route :: get('/pembelian/{id}/edit',[PembelianController::class,'edit']);
+Route :: get('/pembelian/{id}/hapus',[PembelianController::class,'destroy']);
 
 Route::get('/penjualan', function () {
     return view('penjualan.index');

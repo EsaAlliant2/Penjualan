@@ -14,7 +14,11 @@ class PembelianController extends Controller
      */
     public function index()
     {
-        //
+        
+        $pembelian = pembelian::all();
+
+        return view('pembelian.index', compact('pembelian'));
+        
     }
 
     /**
@@ -35,7 +39,14 @@ class PembelianController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'nama' => 'required|max:255',
+            'jumlah' => 'required|numeric',
+            'harga' => 'required|numeric',
+            'barang_id' => 'required'
+        ]);
+        $pembelian = pembelian::create($request->all());
+        return redirect ('pembelian');
     }
 
     /**
@@ -55,9 +66,10 @@ class PembelianController extends Controller
      * @param  \App\Models\Pembelian  $pembelian
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pembelian $pembelian)
+    public function edit($id)
     {
-        //
+        $pembelian = Pembelian::find($id);
+        return view ('pembelian.form', compact ('pembelian'));
     }
 
     /**
@@ -69,7 +81,19 @@ class PembelianController extends Controller
      */
     public function update(Request $request, Pembelian $pembelian)
     {
-        //
+        $validate = $request->validate([
+            'nama' => 'required|max:255',
+            'jumlah' => 'required|max:255',
+            'harga' => 'required|max:255',
+            'barang_id' => 'required'
+        ]);
+        $suplier->update([
+            'nama' => $request -> nama,
+            'jumlah' => $request -> jumlah,
+            'harga' => $request -> harga,
+            'barang_id' => $request -> barang_id
+        ]);
+        return redirect('pembelian');
     }
 
     /**
@@ -78,8 +102,10 @@ class PembelianController extends Controller
      * @param  \App\Models\Pembelian  $pembelian
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pembelian $pembelian)
+    public function destroy($id)
     {
-        //
+        $pembelian = Pembelian::find($id);
+        $pembelian->delete();
+        return redirect('pembelian');
     }
 }

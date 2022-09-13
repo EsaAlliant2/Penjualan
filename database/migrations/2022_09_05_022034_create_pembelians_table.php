@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('pembelian', function (Blueprint $table) {
             $table->id();
             $table->integer('barang_id');
-            $table->date('tanggal');
             $table->integer('jumlah');
             $table->integer('harga');
             $table->timestamps();
