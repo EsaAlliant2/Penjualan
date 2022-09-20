@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('title')
-    pembeli
+    member
 @endsection
 @section('content')
 <div class="card mt-3">

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Suplier;
 use App\Models\Kategori;
 use App\Models\Pembeli;
+use App\Models\Pembelian;
+use App\Models\Penjualan;
 
 class Barang extends Model
 {
@@ -26,5 +28,13 @@ class Barang extends Model
     }
     public function pembeli(){
         return $this->belongsTo(Pembeli::class);
+    }
+
+    public function pembelian(){
+        return $this->belongsTo(Pembelian::class);
+    }
+
+    public function penjualan(){
+        return $this->belongsTo(Penjualan::class);
     }
 }

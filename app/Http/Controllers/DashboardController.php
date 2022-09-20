@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\barang;
-use App\Models\kategori;
-use App\Models\suplier;
+use App\Models\Barang;
+use App\Models\Kategori;
+use App\Models\Suplier;
 use App\Models\pembeli;
+use App\Models\penjualan;
+
 
 class DashboardController extends Controller
 {
@@ -15,7 +17,9 @@ class DashboardController extends Controller
         $kategori = Kategori::all();
         $suplier = Suplier::all();
         $pembeli = Pembeli::all();
+        $penjualan = Penjualan::all();
         
-        return view('home', compact('barang', 'suplier', 'kategori','pembeli'));
-}
+
+        return view('home', compact('barang', 'suplier', 'kategori','pembeli','penjualan'));
+    }
 }

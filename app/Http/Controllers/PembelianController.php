@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pembelian;
+use App\Models\Barang;
 use Illuminate\Http\Request;
 
 class PembelianController extends Controller
@@ -14,11 +15,9 @@ class PembelianController extends Controller
      */
     public function index()
     {
-        
-        $pembelian = pembelian::all();
-
-        return view('pembelian.index', compact('pembelian'));
-        
+        $barang = Barang::all();
+        $pembelian = Pembelian::all();
+        return view('pembelian.index', compact('pembelian', 'barang'));
     }
 
     /**
@@ -40,13 +39,34 @@ class PembelianController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'nama' => 'required|max:255',
-            'jumlah' => 'required|numeric',
-            'harga' => 'required|numeric',
-            'barang_id' => 'required'
+            'barang_id' => 'required',
+            'jumlah'    => 'required|numeric',
+            'harga'     => 'required|numeric',
         ]);
-        $pembelian = pembelian::create($request->all());
-        return redirect ('pembelian');
+
+
+        $pembelian = Pembelian::create([
+            'barang_id' => $request->barang_id,
+            'jumlah' => $request->jumlah,
+            'harga' => $request->harga
+        ]);
+
+        $id_barang = $request->barang_id;
+        $barang = Barang::find($id_barang);
+        $barang->stok += $request->jumlah;
+        $barang->update();
+
+        $pembelian->save();
+
+        // $barang = Pembelian::where('id', $pembelian->id)->get();
+
+        // foreach($barang as $item){
+        //     $barangs = Barang::find($item->id);
+        //     $barangs->stok += $item->jumlah;
+        //     $barangs->update();
+        // }
+
+        return redirect('pembelian');
     }
 
     /**
@@ -55,9 +75,10 @@ class PembelianController extends Controller
      * @param  \App\Models\Pembelian  $pembelian
      * @return \Illuminate\Http\Response
      */
-    public function show(Pembelian $pembelian)
+    public function show($id)
     {
-        //
+        $pembelian = Pembelian::find($id);
+        return view('pembelian.form', compact('pembelian'));
     }
 
     /**
@@ -68,8 +89,9 @@ class PembelianController extends Controller
      */
     public function edit($id)
     {
+        $barang = Barang::all();
         $pembelian = Pembelian::find($id);
-        return view ('pembelian.form', compact ('pembelian'));
+        return view('pembelian.form', compact('pembelian', 'barang'));
     }
 
     /**
@@ -82,17 +104,23 @@ class PembelianController extends Controller
     public function update(Request $request, Pembelian $pembelian)
     {
         $validate = $request->validate([
-            'nama' => 'required|max:255',
-            'jumlah' => 'required|max:255',
-            'harga' => 'required|max:255',
-            'barang_id' => 'required'
+            'barang_id' => 'required',
+            'jumlah'    => 'required|numeric',
+            'harga'     => 'required|numeric',
         ]);
-        $suplier->update([
-            'nama' => $request -> nama,
-            'jumlah' => $request -> jumlah,
-            'harga' => $request -> harga,
-            'barang_id' => $request -> barang_id
+
+
+        $pembelian->update([
+            'barang_id' => $request->barang_id,
+            'jumlah' => $request->jumlah,
+            'harga' => $request->harga
         ]);
+
+        $id_barang = $request->barang_id;
+        $barang = Barang::find($id_barang);
+        $barang->stok += $request->jumlah;
+        $barang->update();
+
         return redirect('pembelian');
     }
 
